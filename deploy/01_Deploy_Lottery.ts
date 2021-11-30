@@ -12,10 +12,10 @@ const deployLottery: DeployFunction = async function (
   const { deploy, log, get } = deployments;
   const { deployer } = await getNamedAccounts();
   const chainId = await getChainId();
-  let linkTokenAddress: string,
-    vrfCoordinatorAddress: string,
-    linkToken: Deployment,
-    VRFCoordinatorMock: Deployment;
+  let linkTokenAddress: string;
+  let vrfCoordinatorAddress: string;
+  let linkToken: Deployment;
+  let VRFCoordinatorMock: Deployment;
   let additionalMessage = "";
 
   // kovan
