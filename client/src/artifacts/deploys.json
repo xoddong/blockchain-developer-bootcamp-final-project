@@ -5,7 +5,7 @@
       "chainId": "42",
       "contracts": {
         "Lottery": {
-          "address": "0xF2E23B3E611CE001110e38AD2fA260Ff98E469a1",
+          "address": "0x67E32FA1bea33cB58DB6292D5Cdcf840f1a1ec8E",
           "abi": [
             {
               "inputs": [

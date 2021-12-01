@@ -119,3 +119,15 @@ cd client
 yarn install
 yarn start
 ```
+
+To deploy your own instance to work with in local client, first compile and redeploy a new contract.
+
+```sh
+yarn compile
+yarn deploy:kovan
+npx hardhat fund-link --contract {NEW_CONTRACT_ADDRESS} --network kovan
+
+cd client
+yarn install
+yarn start
+```

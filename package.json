@@ -6,7 +6,7 @@
     "test": "npx hardhat test",
     "compile": "npx hardhat compile",
     "deploy": "npx hardhat deploy --export-all './client/src/artifacts/deploys.json'",
-    "deploy:kovan": "npx hardhat deploy --network kovan --export-all './client/src/artifacts/deploys.json'"
+    "deploy:kovan": "npx hardhat deploy --network kovan --reset-- --export-all './client/src/artifacts/deploys.json'"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
