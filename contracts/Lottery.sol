@@ -145,8 +145,8 @@ contract Lottery is Ownable, VRFConsumerBase {
     winningNumber = (randomness % maxTicketCount) + 1;
     emit LotteryWinningNumberDrawn(winningNumber);
 
-    _transferPrizeToWinner();
     _changeLotteryState(LotteryState.Closed);
+    _transferPrizeToWinner();
   }
 
   /**

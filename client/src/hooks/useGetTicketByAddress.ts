@@ -3,7 +3,7 @@ import { useContractCall } from "@usedapp/core";
 import { useGetLotteryContract } from "./useGetLotteryContract";
 
 type UseGetTicketNumberByAddressProps = {
-  address: string;
+  address: string | null | undefined;
 };
 
 export const useGetTicketByAddress = ({
@@ -13,7 +13,8 @@ export const useGetTicketByAddress = ({
 } => {
   const { lotteryInterface, lotteryContractAddress } = useGetLotteryContract();
 
-  const [, ticketNumber] =
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, ticketNumber] =
     useContractCall({
       abi: lotteryInterface,
       address: lotteryContractAddress,

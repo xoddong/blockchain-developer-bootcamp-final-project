@@ -1,12 +1,4 @@
-import { useEthers } from "@usedapp/core";
-
-type RequireWeb3Props = {
-  error?: Error;
-};
-
-export const RequireWeb3 = ({ error }: RequireWeb3Props) => {
-  const { activateBrowserWallet, deactivate, account } = useEthers();
-
+export const RequireWeb3 = () => {
   return (
     <div>
       <div>MetaMask is required to use this application.</div>
@@ -17,17 +9,9 @@ export const RequireWeb3 = ({ error }: RequireWeb3Props) => {
           target="_blank"
           href="https://metamask.io/download"
         >
-          here
+          here.
         </a>
       </div>
-      {account ? (
-        <button onClick={() => deactivate()}>Disconnect</button>
-      ) : (
-        <div>
-          <button onClick={() => activateBrowserWallet()}>Connect</button>
-        </div>
-      )}
-      {account && <p>Account: {account}</p>}
     </div>
   );
 };
