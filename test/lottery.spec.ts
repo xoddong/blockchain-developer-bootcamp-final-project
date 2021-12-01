@@ -2,11 +2,11 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
 import { ethers, deployments, network, run, getChainId } from "hardhat";
 import { Deployment } from "hardhat-deploy/dist/types";
-import { Lottery } from "../../typechain";
+import { Lottery } from "../typechain";
 const {
   developmentChains,
   networkConfig,
-} = require("../../helper-hardhat-config");
+} = require("../helper-hardhat-config");
 
 describe("Lottery", function () {
   let runTest = false;
@@ -51,7 +51,7 @@ describe("Lottery", function () {
 
     expect(await lottery.ticketPrice()).to.equal(ticketPrice);
     expect(await lottery.maxTicketCount()).to.equal(maxTicketCount);
-    expect(await lottery.isPrizeClaimed()).to.be.false;
+    expect(await lottery.isPrizeClaimAttempted()).to.be.false;
     expect(await lottery.lotteryState()).to.equal(0);
   });
 
@@ -149,6 +149,7 @@ describe("Lottery", function () {
 
     expect(await lottery.winningNumber()).to.equal(2);
   });
+
   it("Lottery balance is transferred to the winner", async () => {
     if (!runTest) {
       return;
@@ -194,13 +195,13 @@ describe("Lottery", function () {
 
     const lotteryBalance = await lottery.getLotteryBalance();
     const lotteryState = await lottery.lotteryState();
-    const isPrizeClaimed = await lottery.isPrizeClaimed();
+    const isPrizeClaimAttempted = await lottery.isPrizeClaimAttempted();
     const winnerBalance = await bob.getBalance();
     const ticketHolderBalance = await alice.getBalance();
 
     expect(lotteryBalance).to.equal("0");
     expect(lotteryState).to.equal(1);
-    expect(isPrizeClaimed).to.be.true;
+    expect(isPrizeClaimAttempted).to.be.true;
     expect(winnerBalance.gt(initialWinnerBalance)).to.be.true;
     expect(ticketHolderBalance.lt(initialTicketHolderBalance)).to.be.true;
   });
