@@ -13,6 +13,11 @@ The total prize pool is then automatically fowarded to the winner.
 
 Visit https://blockchain-developer-bootcamp-final-project-6a69w4aq1-xoddong.vercel.app/
 
+## Screencast
+
+Part 1: https://www.loom.com/share/3b79fe9ffc3d41c584a06154014ee0b6?sharedAppSource=personal_library
+Part 2: https://www.loom.com/share/1c8917da1b78474aad2ff444369f7622?sharedAppSource=personal_library
+
 # Quickstart
 
 ## Requirements
