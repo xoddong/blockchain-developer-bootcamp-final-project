@@ -4,7 +4,6 @@ Simple Lottery is a decentralized take on reddit's /r/millionairemakers.
 A player can purchase a lottery ticket with a "one ticket per address" limitation.
 When all the tickets are sold, the winning number is drawn via Chainlink VRF.
 The total prize pool is then automatically fowarded to the winner.
-And the next game begins.
 
 ## My Ethereum address
 

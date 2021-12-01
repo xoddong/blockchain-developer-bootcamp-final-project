@@ -2,7 +2,8 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
 import { ethers, deployments, network, run, getChainId } from "hardhat";
 import { Deployment } from "hardhat-deploy/dist/types";
-import { Lottery } from "../typechain";
+import { LinkToken, Lottery } from "../typechain";
+
 const {
   developmentChains,
   networkConfig,
@@ -11,6 +12,7 @@ const {
 describe("Lottery", function () {
   let runTest = false;
   let lottery: Lottery;
+  let link: LinkToken;
   let LinkToken: Deployment;
   let VRFCoordinatorMock: Deployment;
   let owner: SignerWithAddress;
@@ -23,6 +25,8 @@ describe("Lottery", function () {
     if (developmentChains.includes(network.name)) {
       runTest = true;
     }
+    // Assign accounts
+    [owner, oracle, alice, bob] = await ethers.getSigners();
 
     // Deploy necesary contracts
     await deployments.fixture(["lottery"]);
@@ -36,9 +40,7 @@ describe("Lottery", function () {
       LotteryDeployment.address,
       owner
     );
-
-    // Assign accounts
-    [owner, oracle, alice, bob] = await ethers.getSigners();
+    link = await ethers.getContractAt("LinkToken", LinkToken.address, owner);
   });
 
   it("Contract initializes with correct state", async () => {
@@ -204,5 +206,35 @@ describe("Lottery", function () {
     expect(isPrizeClaimAttempted).to.be.true;
     expect(winnerBalance.gt(initialWinnerBalance)).to.be.true;
     expect(ticketHolderBalance.lt(initialTicketHolderBalance)).to.be.true;
+  });
+  it("Owner can withdraw leftover LINK", async () => {
+    if (!runTest) {
+      return;
+    }
+
+    // Fund our contract with LINK
+    await run("fund-link", {
+      contract: lottery.address,
+      linkaddress: LinkToken.address,
+    });
+
+    const receipt = await lottery.withdrawERC20(link.address, owner.address);
+
+    expect(receipt.to).to.eq(lottery.address);
+  });
+  it("Non owner can't withdraw leftover LINK", async () => {
+    if (!runTest) {
+      return;
+    }
+
+    // Fund our contract with LINK
+    await run("fund-link", {
+      contract: lottery.address,
+      linkaddress: LinkToken.address,
+    });
+
+    await expect(
+      lottery.connect(alice).withdrawERC20(link.address, owner.address)
+    ).to.be.revertedWith("");
   });
 });

@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.7;
 
+import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 /**
  * @title Lottery
@@ -12,6 +14,7 @@ import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
  */
 contract Lottery is Ownable, VRFConsumerBase {
   using Counters for Counters.Counter;
+  using SafeERC20 for IERC20;
 
   /**
    * @notice Chainlink related variables
@@ -201,5 +204,15 @@ contract Lottery is Ownable, VRFConsumerBase {
    */
   function getCurrentTicketNumber() public view returns (uint256) {
     return currentTicketNumber.current();
+  }
+
+  /**
+   * @notice Withdraw any ERC20 token
+   * @dev used for when there is left over LINK token after generating random number
+   * @param _token Token address. LINK for contract
+   * @param _recipient address to receive left over LINK
+   */
+  function withdrawERC20(IERC20 _token, address _recipient) public onlyOwner {
+    _token.safeTransfer(_recipient, _token.balanceOf(address(this)));
   }
 }
