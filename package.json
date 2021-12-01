@@ -1,11 +1,13 @@
 {
+  "name": "blockchain-developer-bootcamp-final-project",
+  "version": "0.1.0",
+  "license": "MIT",
   "scripts": {
     "test": "npx hardhat test",
     "compile": "npx hardhat compile",
     "deploy": "npx hardhat deploy --export-all './client/src/artifacts/deploys.json'",
     "deploy:kovan": "npx hardhat deploy --network kovan --export-all './client/src/artifacts/deploys.json'"
   },
-  "name": "blockchain-developer-bootcamp-final-project",
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
     "@nomiclabs/hardhat-etherscan": "^2.1.6",
